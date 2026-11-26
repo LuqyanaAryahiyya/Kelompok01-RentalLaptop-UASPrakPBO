@@ -119,23 +119,17 @@ class Admin extends Akun {
     }
 }
 
-/**
- * Representasi akun pengguna dengan peran {@code Penyewa}.
- * Memiliki {@link KeranjangSewa} dan riwayat transaksi sewa yang telah diterima admin.
- */
 class Penyewa extends Akun {
 
     private final KeranjangSewa keranjang;
     private final ArrayList<Transaksi> riwayat;
 
-    /** Membuat instance {@code Penyewa} baru dengan keranjang dan riwayat kosong. */
     public Penyewa(String id, String username, String password, String nama) {
         super(id, username, password, nama);
         this.keranjang = new KeranjangSewa();
         this.riwayat = new ArrayList<>();
     }
 
-    /** Melakukan login khusus peran Penyewa dengan validasi kredensial dan pesan sambutan. */
     @Override
     public void login(String username, String password) throws LoginGagalException {
         super.login(username, password);
@@ -147,7 +141,6 @@ class Penyewa extends Akun {
         return "Penyewa";
     }
 
-    /** Mengembalikan daftar barang yang sedang tersedia untuk disewa. */
     public List<Barang> lihatBarang(DaftarBarang daftarBarang) {
         if (daftarBarang == null) {
             return Collections.emptyList();
