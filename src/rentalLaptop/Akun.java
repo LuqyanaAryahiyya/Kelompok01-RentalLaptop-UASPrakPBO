@@ -147,3 +147,58 @@ class Penyewa extends Akun {
         }
         return daftarBarang.getBarangTersedia();
     }
+
+      public Transaksi buatTransaksi(int lamaSewa, Pembayaran pembayaran,
+            DaftarTransaksi daftarTransaksi, DaftarBarang daftarBarang)
+            throws InputTidakValidException, BarangTidakTersediaException,
+                   BarangTidakDitemukanException {
+        if (keranjang.isEmpty()) {
+            throw new InputTidakValidException(
+                    "Daftar sewa (keranjang) masih kosong. Tambahkan laptop terlebih dahulu.");
+        }
+        if (lamaSewa < Transaksi.LAMA_SEWA_MIN || lamaSewa > Transaksi.LAMA_SEWA_MAX) {
+            throw new InputTidakValidException(
+                    "Lama sewa harus antara " + Transaksi.LAMA_SEWA_MIN + " sampai "
+                            + Transaksi.LAMA_SEWA_MAX + " hari.");
+        }
+        if (pembayaran == null) {
+            throw new InputTidakValidException("Metode pembayaran belum dipilih.");
+        }
+        if (daftarTransaksi == null || daftarBarang == null) {
+            throw new InputTidakValidException("Layanan transaksi atau katalog tidak tersedia.");
+        }
+
+        for (Barang item : keranjang.getDaftarBarang()) {
+            Barang aktual = daftarBarang.cariById(item.getId());
+            if (!aktual.isTersedia()) {
+                throw new BarangTidakTersediaException(
+                        "Laptop " + aktual.getId() + " (" + aktual.getNama()
+                                + ") sudah berstatus DISEWA. Hapus dari daftar sewa terlebih dahulu.");
+            }
+        }
+
+        double totalBayar = keranjang.hitungEstimasiTotal(lamaSewa);
+        pembayaran.prosesPembayaran(totalBayar);
+
+        String idTransaksi = daftarTransaksi.generateId();
+        Transaksi transaksi = new Transaksi(
+                idTransaksi, this, keranjang.getDaftarBarang(), lamaSewa, pembayaran);
+        daftarTransaksi.tambahTransaksi(transaksi);
+        keranjang.kosongkan();
+        return transaksi;
+    }
+    
+    public void tambahRiwayat(Transaksi transaksi) {
+        if (transaksi != null && !riwayat.contains(transaksi)) {
+            riwayat.add(transaksi);
+        }
+    }
+    
+    public List<Transaksi> lihatRiwayat() {
+        return Collections.unmodifiableList(riwayat);
+    }
+
+    public KeranjangSewa getKeranjang() {
+        return keranjang;
+    }
+}
