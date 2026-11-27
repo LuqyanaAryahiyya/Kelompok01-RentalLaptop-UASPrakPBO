@@ -1,4 +1,4 @@
-package com.rentallaptop;
+package rentalLaptop;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
