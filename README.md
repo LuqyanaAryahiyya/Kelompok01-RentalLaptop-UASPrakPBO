@@ -63,8 +63,8 @@ Semua file `.java` harus dikompilasi sekaligus (jangan hanya `Main.java`), karen
 
 ```powershell
 mkdir out -Force | Out-Null
-javac --release 17 -encoding UTF-8 -d out src\com\rentallaptop\*.java
-java -cp out com.rentallaptop.Main
+javac --release 17 -encoding UTF-8 -d out src\rentalLaptop\*.java
+java -cp out rentalLaptop.Main
 ```
 
 ### Linux / macOS (Bash)
