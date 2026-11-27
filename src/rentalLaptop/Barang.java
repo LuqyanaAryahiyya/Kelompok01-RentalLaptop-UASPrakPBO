@@ -63,3 +63,59 @@ public abstract class Barang {
         return tersedia ? StatusBarang.TERSEDIA : StatusBarang.DISEWA;
     }
 }
+
+abstract class Laptop extends Barang {
+
+    private String spesifikasi;
+
+    protected Laptop(String id, String nama, double tarifHarian, String spesifikasi)
+            throws InputTidakValidException {
+        super(id, nama, tarifHarian);
+        setSpesifikasi(spesifikasi);
+    }
+
+    public String getSpesifikasi() {
+        return spesifikasi;
+    }
+
+    public void setSpesifikasi(String spesifikasi) throws InputTidakValidException {
+        if (spesifikasi == null || spesifikasi.trim().isEmpty()) {
+            throw new InputTidakValidException("Spesifikasi laptop tidak boleh kosong.");
+        }
+        this.spesifikasi = spesifikasi.trim();
+    }
+
+    public abstract String getKeteranganBiaya();
+}
+
+class LaptopStandard extends Laptop {
+
+    public static final double TARIF_DEFAULT = 50_000.0;
+
+    public LaptopStandard(String id, String nama, double tarifHarian, String spesifikasi)
+            throws InputTidakValidException {
+        super(id, nama, tarifHarian, spesifikasi);
+    }
+
+    public LaptopStandard(String id, String nama, String spesifikasi)
+            throws InputTidakValidException {
+        this(id, nama, TARIF_DEFAULT, spesifikasi);
+    }
+
+    @Override
+    public double hitungBiaya(int hari) {
+        return getTarifHarian() * hari;
+    }
+
+    @Override
+    public String getKategori() {
+        return "Standard";
+    }
+
+    @Override
+    public String getKeteranganBiaya() {
+        return "Tanpa biaya tambahan";
+    }
+}
+
+
