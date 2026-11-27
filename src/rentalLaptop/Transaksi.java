@@ -8,7 +8,7 @@ import java.util.List;
 // Class untuk mengelola transaksi penyewaan laptop.
 public class Transaksi {
 
-    // Batas minimum lama sewa.
+    // Batas minimum lama sewa
     public static final int LAMA_SEWA_MIN = 1;
 
     // Batas maksimum lama sewa.
