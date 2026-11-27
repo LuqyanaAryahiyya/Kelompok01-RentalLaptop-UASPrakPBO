@@ -1,4 +1,4 @@
-package com.rentallaptop;
+package rentalLaptop;
 
 class LoginGagalException extends Exception{
 
