@@ -1,4 +1,4 @@
-package com.rentallaptop;
+package rentalLaptop;
 
 import java.util.ArrayList;
 import java.util.List;
