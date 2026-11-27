@@ -4,11 +4,7 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
-/**
- * Entry point aplikasi CLI Rental Laptop.
- * Menyimpan referensi {@code akunAktif}, menginisialisasi data akun dan layanan,
- * menangani proses login (maksimal 3 percobaan), serta mengarahkan ke menu sesuai peran.
- */
+
 public class Main {
 
     private static final int MAKS_PERCOBAAN_LOGIN = 3;
@@ -19,7 +15,6 @@ public class Main {
     private final Scanner scanner;
     private Akun akunAktif;
 
-    /** Membuat instance aplikasi {@code Main} beserta akun default dan layanan memori. */
     public Main() {
         this.daftarAkun = new ArrayList<>();
         this.daftarBarang = new DaftarBarang();
@@ -38,10 +33,6 @@ public class Main {
         return akunAktif;
     }
 
-    /**
-     * Menjalankan loop utama aplikasi: menampilkan menu awal (Admin, Penyewa, Keluar),
-     * memproses login sesuai pilihan peran, lalu menampilkan menu peran sampai program berhenti.
-     */
     public void jalankan() {
         boolean berjalan = true;
         while (berjalan) {
@@ -101,18 +92,10 @@ public class Main {
         }
     }
 
-    /**
-     * Menampilkan layar login umum dan memvalidasi kredensial pengguna dengan batas
-     * maksimal {@value #MAKS_PERCOBAAN_LOGIN} kali percobaan gagal.
-     */
     public boolean login() {
         return login(Akun.class);
     }
 
-    /**
-     * Menampilkan layar login untuk peran tertentu dan memvalidasi kredensial pengguna
-     * dengan batas maksimal {@value #MAKS_PERCOBAAN_LOGIN} kali percobaan gagal.
-     */
     public boolean login(Class<? extends Akun> peranTarget) {
         String judulLogin = "LOGIN";
         if (peranTarget == Admin.class) {
@@ -169,23 +152,18 @@ public class Main {
         throw new LoginGagalException("Username atau password salah.");
     }
 
-    /** Method utama untuk menjalankan aplikasi CLI Rental Laptop. */
     public static void main(String[] args) {
         Main app = new Main();
         app.jalankan();
     }
 }
 
-/** Pengelola antarmuka CLI dan alur fitur untuk peran {@link Admin}. */
 class MenuAdmin {
 
-    /** Kode hasil aksi menu: lanjut tampilkan menu. */
     public static final int AKSI_LANJUT = 0;
 
-    /** Kode hasil aksi menu: logout kembali ke layar login. */
     public static final int AKSI_LOGOUT = 1;
 
-    /** Kode hasil aksi menu: keluar dari program. */
     public static final int AKSI_KELUAR = 2;
 
     private final Admin admin;
@@ -193,7 +171,6 @@ class MenuAdmin {
     private final DaftarTransaksi daftarTransaksi;
     private final Scanner scanner;
 
-    /** Membuat instance {@code MenuAdmin}. */
     public MenuAdmin(Admin admin, DaftarBarang daftarBarang,
             DaftarTransaksi daftarTransaksi, Scanner scanner) {
         this.admin = admin;
@@ -202,7 +179,6 @@ class MenuAdmin {
         this.scanner = scanner;
     }
 
-    /** Menjalankan loop menu Admin sampai pengguna memilih logout atau keluar program. */
     public int tampilkanMenu() {
         while (true) {
             System.out.println("\n=== MENU ADMIN (" + admin.getNama() + ") ===");
@@ -495,13 +471,10 @@ class MenuAdmin {
     }
 }
 
-/** Pengelola antarmuka CLI dan alur fitur untuk peran {@link Penyewa}. */
 class MenuPenyewa {
 
-    /** Kode hasil aksi menu: logout kembali ke layar login. */
     public static final int AKSI_LOGOUT = 1;
 
-    /** Kode hasil aksi menu: keluar dari program. */
     public static final int AKSI_KELUAR = 2;
 
     private final Penyewa penyewa;
@@ -509,7 +482,6 @@ class MenuPenyewa {
     private final DaftarTransaksi daftarTransaksi;
     private final Scanner scanner;
 
-    /** Membuat instance {@code MenuPenyewa}. */
     public MenuPenyewa(Penyewa penyewa, DaftarBarang daftarBarang,
             DaftarTransaksi daftarTransaksi, Scanner scanner) {
         this.penyewa = penyewa;
@@ -518,7 +490,6 @@ class MenuPenyewa {
         this.scanner = scanner;
     }
 
-    /** Menjalankan loop menu Penyewa sampai pengguna memilih logout atau keluar program. */
     public int tampilkanMenu() {
         while (true) {
             System.out.println("\n=== MENU PENYEWA (" + penyewa.getNama() + ") ===");
