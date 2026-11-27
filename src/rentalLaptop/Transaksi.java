@@ -1,4 +1,4 @@
-package com.rentallaptop;
+package rentallaptop;
 
 import java.time.LocalDate;
 import java.time.temporal.ChronoUnit;
