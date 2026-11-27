@@ -118,4 +118,73 @@ class LaptopStandard extends Laptop {
     }
 }
 
+class LaptopGaming extends Laptop {
+
+    public static final double TARIF_DEFAULT = 100_000.0;
+
+    public static final double BIAYA_PERAWATAN_HARIAN = 15_000.0;
+
+    public LaptopGaming(String id, String nama, double tarifHarian, String spesifikasi)
+            throws InputTidakValidException {
+        super(id, nama, tarifHarian, spesifikasi);
+    }
+
+    public LaptopGaming(String id, String nama, String spesifikasi)
+            throws InputTidakValidException {
+        this(id, nama, TARIF_DEFAULT, spesifikasi);
+    }
+
+    @Override
+    public double hitungBiaya(int hari) {
+        return (getTarifHarian() + BIAYA_PERAWATAN_HARIAN) * hari;
+    }
+
+    @Override
+    public String getKategori() {
+        return "Gaming";
+    }
+
+    @Override
+    public String getKeteranganBiaya() {
+        return "Perawatan Rp15.000/hari";
+    }
+}
+
+class LaptopWorkstation extends Laptop {
+
+    public static final double TARIF_DEFAULT = 150_000.0;
+
+    public static final double PERSENTASE_ASURANSI = 0.10;
+
+    public LaptopWorkstation(String id, String nama, double tarifHarian, String spesifikasi)
+            throws InputTidakValidException {
+        super(id, nama, tarifHarian, spesifikasi);
+    }
+
+    public LaptopWorkstation(String id, String nama, String spesifikasi)
+            throws InputTidakValidException {
+        this(id, nama, TARIF_DEFAULT, spesifikasi);
+    }
+
+    @Override
+    public double hitungBiaya(int hari) {
+        return (getTarifHarian() * hari) * (1.0 + PERSENTASE_ASURANSI);
+    }
+
+    @Override
+    public String getKategori() {
+        return "Workstation";
+    }
+
+    @Override
+    public String getKeteranganBiaya() {
+        return "Asuransi 10% dari total sewa";
+    }
+}
+
+enum StatusBarang {
+    TERSEDIA, DISEWA
+}
+
+
 
